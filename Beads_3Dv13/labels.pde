@@ -7,6 +7,35 @@ void loadLabels() {
       TableRow drow = labels.matchRow("^" + str(k) + "$",0);
       deweyLabels[k] = drow.getString(1);
     }
+    if (unDewey) {
+      unDeweyLabels = new String[10];
+      for (int n=0; n<10; n++) {
+        String udl = "";
+        switch (n) {
+          case 0: udl = "E";
+                  break;
+          case 1: udl = "J";   
+                  break;
+          case 2: udl = "YA";  
+                  break;
+          case 3: udl = "biography";   
+                  break;
+          case 4: udl = "mystery";   
+                  break;
+          case 5: udl = "sci-fi";   
+                  break;
+          case 6: udl = "fiction";   
+                  break;
+          case 7: udl = "VHS";      
+                  break;
+          case 8: udl = "CD";      
+                  break;
+          case 9: udl = "DVD";      
+                  break;
+        }
+        unDeweyLabels[n] = udl;
+      }
+    }
 }
 
 void drawLabels() {
@@ -17,9 +46,21 @@ void drawLabels() {
       textAlign(LEFT, CENTER);
       textSize(lpix);
       stroke(0,0,80);
-      float tx = (rowsPerClass * cl) * (bH + beadSpacing) + 3*lpix/4;
+      float tx = (rowsPerClass * cl + uD) * (bH + beadSpacing) + 3*lpix/4;
       float ty = -1*(colsPerClass*colSpacing)/2 - lpix;
       text(deweyTitle(floor(startDewey/100)+cl), tx, ty);
+    popMatrix();
+  }
+  for (int n=0; n<10; n++) {
+    pushMatrix();
+      rotateX(radians(90));
+      rotateZ(radians(270));
+      textAlign(RIGHT,CENTER);
+      textSize(upix);
+      stroke(0,0,80);
+      float tx = - 3*lpix/4; //(bH + beadSpacing)
+      float ty = -1*(colsPerClass*colSpacing)/2 + (n*colSpacing);
+      text(unDeweyLabels[n], tx, ty);
     popMatrix();
   }
 }

@@ -45,7 +45,7 @@ class Bead{
       
     // mouseover?
     float mouseDistance = sq(mouseX-screenX(0, 0, 0))+sq(mouseY-screenY(0, 0, 0)); 
-    if (mouseDistance < sq(min(colSpacing,beadSpacing)))
+    if (mouseDistance < sq(min(colSpacing,beadSpacing)) && deweyNumber>=0)
     {
       //TableRow drow = labels.matchRow("^" + str(deweyNumber) + "$",0);
       //theTxt = deweyNumber + " : " + drow.getString(1);

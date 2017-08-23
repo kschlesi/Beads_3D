@@ -19,7 +19,9 @@ int deweyPerClass = 100;  // number of beads per class (same for all)
 int startDewey = 600; // start dewey number (all must be sequential)
 int nBeads = noClasses * deweyPerClass;  // total bead number per country
 Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];  // init bead array
-boolean noDewey = true;
+boolean unDewey = true;
+Bead[][] udBeads = new Bead[10][nCs];  // init bead array
+int uD;
 
 // individual bead sizes
 int startYear = 2006;  // time vars = bead angle
@@ -41,12 +43,17 @@ float satMin = 35; //35
 float satMax = 99; //99
 float briMin = 35; //10
 float briMax = 99; //99
-float lpix = 45; // size of labels
+
+// for labels
+float lpix = 45; // size of class labels
+float upix = 20; // size of unDewey labels
 String theTxt;
+String unDeweyLabels[];
 
 // for input data storage
 Table table;
 Table labels;
+Table undewey;
 float[][] beadMatrix;  // holds bead checkout values
 
 // interaction
@@ -54,6 +61,7 @@ boolean cSwitch[];
 boolean iSwitch;
 boolean lSwitch;
 boolean dispTxt;
+boolean tLabels;
 
 void setup(){
   // size and view
@@ -64,9 +72,7 @@ void setup(){
   setupCamera();
   
   setSwitches();
-  
-  cp5 = new ControlP5(this);
-  
+    
   createDeweyBeads();
   
   loadLabels();
@@ -80,24 +86,27 @@ void draw(){
   
   // set background and initial position of array
   //background(250);
-  background(0,0,30);
+  background(0,0,20);
   //translate(width/2-colSpacing/2,height/2,0);
   cam.rotateX(0);
     
   // draw beadstrings
   for (int s=0; s<colsPerClass; s++){
     float strx = s*colSpacing - (colsPerClass*colSpacing)/2;
-    float strz = -1 * ((rowsPerClass*noClasses-1) * (bH + beadSpacing));
+    float strz = -1 * ((rowsPerClass*noClasses-1+uD) * (bH + beadSpacing));
     stroke(0,0,75);
     strokeWeight(1);
     line(strx, 0, beadSpacing, strx, 0, strz);    
   }
     
   // draw dewey beads
-  for(int b=0; b<noClasses*deweyPerClass; b++) {
-    for (int c=0; c<nCs; c++) {
-      if (cSwitch[c] == true) {
+  for (int c=0; c<nCs; c++) {
+    if (cSwitch[c] == true) {
+      for(int b=0; b<noClasses*deweyPerClass; b++) {
         allBeads[b][c].drawBead();
+      }
+      for(int n=0; n<10; n++) {
+        udBeads[n][c].drawBead();
       }
     }
   }
