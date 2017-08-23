@@ -1,0 +1,469 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf760
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red53\green53\blue53;}
+{\*\expandedcolortbl;;\cssrgb\c27059\c27059\c27059;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\
+<HTML>\
+    <HEAD>\
+        <TITLE>Project Description</TITLE>\
+        <link rel="stylesheet" type="text/css" media="all" href="newTemplate.css" /> \
+    </HEAD>\
+\
+    <BODY bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">\
+        <div id="wrap">\
+    	    <div class="left_column"></div>\
+\
+            <!-- Replace to your own title below -->\
+    	    <div class="right_column"><strong><span class="style4">International SPL</span><br></strong></div>\
+            \
+            <div class="line"></div>\
+            <div class="left_column"><strong>MAT 259, Winter 2017</strong></div>\
+\
+            <!-- Replace to your name below -->\
+            <div class="right_column"><strong>Kimberly Schlesinger</strong></div>\
+            \
+            <div class="line"><hr noshade size="1"></div> \
+            \
+            <!-- Concept Section -->\
+            <div class="left_column"><strong>Concept</strong></div>\
+            <div class="right_column">\
+                
+\f1 \cf2 For this project, I wanted to keep the idea of looking at the contexts in which patrons of the Seattle Public Library interact with different countries and cultures. I used a similar query to my 2D project, counting the number of checkouts of media related to each country by searching the titles for country names, and grouping the checkouts by Dewey number and time to highlight topic trends and changes over the past decade. I wanted to create objects whose shapes encapsulated these changes.
+\f0 \cf0  <br>\
+            </div>\
+            <div class="line"><hr noshade size="1"></div> \
+        \
+            <div class="left_column"><strong>Query</strong></div>\
+            <div class="right_column">\
+                
+\f1 \cf2 This was a similar query to the one for my previous project, but I wanted to make the data more granular. I counted the checkouts by month instead of just by year, as I had done previously, and I broke down the topics into 1000 separate Dewey numbers rather than grouping the Dewey classifications into bins of 10. I also made sure to include only those checkouts with a Dewey classification; previous attempts at this query had placed unclassified media in the \'930\'94 bin. This query runs in approximately 5 minutes.
+\f0 \cf0 \
+                <br>\
+                
+\f1 \cf2 SELECT year(cout), month(cout), floor(deweyClass) as deweyBin, \
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%mexic%" THEN 1 ELSE 0 END) as Mexico,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%ireland%" OR spl_2016.outraw.title LIKE "%irish%" THEN 1 ELSE 0 END) as Ireland,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%spain%" OR spl_2016.outraw.title LIKE "%spanish%" THEN 1 ELSE 0 END) as Spain,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%israel%" THEN 1 ELSE 0 END) as Israel,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%egypt%" THEN 1 ELSE 0 END) as Egypt,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%viet%nam%" THEN 1 ELSE 0 END) as Vietnam,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%german%" THEN 1 ELSE 0 END) as Germany,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%russia%" THEN 1 ELSE 0 END) as Russia,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%china%" OR spl_2016.outraw.title LIKE "%chinese%" THEN 1 ELSE 0 END) as China,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%cuba%" THEN 1 ELSE 0 END) as Cuba,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%iraq%" THEN 1 ELSE 0 END) as Iraq,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%japan%" THEN 1 ELSE 0 END) as Japan\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 FROM spl_2016.outraw\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 WHERE year(cout) > 2005 AND year(cout) < 2017\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2   AND deweyClass IS NOT NULL AND deweyClass != ""\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2   AND (spl_2016.outraw.title LIKE "%mexic%" OR \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%ireland%" OR spl_2016.outraw.title LIKE "%irish%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%spain%" OR spl_2016.outraw.title LIKE "%spanish%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%israel%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%egypt%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%viet%nam%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%german%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%russia%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%china%" OR spl_2016.outraw.title LIKE "%chinese%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%cuba%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%iraq%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%japan%")\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 GROUP BY deweyBin, year(cout), month(cout)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 ORDER BY deweyBin, year(cout), month(cout);\
+		<br><br>\
+In addition, I ran a separate query to search for all the media with no Dewey classification, and break down these checkouts by topics found in their call numbers. I started with a query to pull out all biographies in this set, whose call numbers start with "B ":\
+		<br>\
+SELECT year(cout), month(cout), callNumber, \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%mexic%" THEN 1 ELSE 0 END) as Mexico,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%ireland%" OR spl_2016.outraw.title LIKE "%irish%" THEN 1 ELSE 0 END) as Ireland,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%spain%" OR spl_2016.outraw.title LIKE "%spanish%" THEN 1 ELSE 0 END) as Spain,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%israel%" THEN 1 ELSE 0 END) as Israel,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%egypt%" THEN 1 ELSE 0 END) as Egypt,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%china%" OR spl_2016.outraw.title LIKE "%chinese%" THEN 1 ELSE 0 END) as China,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%cuba%" THEN 1 ELSE 0 END) as Cuba,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%iraq%" THEN 1 ELSE 0 END) as Iraq,\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        sum(CASE WHEN spl_2016.outraw.title LIKE "%japan%" THEN 1 ELSE 0 END) as Japan\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 FROM spl_2016.outraw\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 INNER JOIN spl_2016.callNumber\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 ON spl_2016.outraw.itemNumber = spl_2016.callNumber.itemNumber\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 WHERE year(cout) > 2005 AND year(cout) < 2017\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2   AND (deweyClass IS NULL OR deweyClass = "")\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2   AND (spl_2016.outraw.title LIKE "%mexic%" OR \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%ireland%" OR spl_2016.outraw.title LIKE "%irish%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%spain%" OR spl_2016.outraw.title LIKE "%spanish%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%israel%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%egypt%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%china%" OR spl_2016.outraw.title LIKE "%chinese%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%cuba%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%iraq%" OR\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2        spl_2016.outraw.title LIKE "%japan%")\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2   AND (callNumber REGEXP "^B ")\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 GROUP BY deweyBin, year(cout), month(cout)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br>
+\f1 \cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf2 ORDER BY deweyBin, year(cout), month(cout);\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0                 <br><br>\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1 \cf2 This query runs in about 2 minutes. I ran more similar queries to search for a few more call number-defined topics, including "J" = juniors, "E" = early childhood (I think), "YA" = young adult, "MYSTERY," "SCI-FIC," general "FIC," "CD," "DVD," and "VHS."
+\f0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0             </div>\
+            <div class="line"><hr noshade size="1"></div>\
+        \
+            <!-- Process and Sketches Section -->\
+            <div class="left_column"><strong>Process and Sketches</strong></div>\
+            <div class="right_column">    \
+                
+\f1 \cf2 I started by trying to define the shape I wanted to give to each object, that would define the topic and frequency patterns. I started with cylindrical objects where the radius indicated the number of checkouts, the polar angle indicated the month from Jan 2006 to Dec 2016, and the height indicated the topic. I modified a Processing example for drawing cylinders to stack a bunch of cylinders and changes their radii. Here is an early try at sketching it for ten Dewey numbers in the History class:\
+
+\f0 \cf0 	     <br>\
+                <img src=\'93early_1.png" width="500"/><br><br>\
+                
+\f1 \cf2 Since the data is more granular than in the 2D project, the yearly spikes around the polar angle and the wild changes between checkouts for adjacent topics made the object look too jagged. So I decided to separate Dewey numbers into separate objects, and separate the year and month to different axes (polar angle is month, height is year). This made the objects more smooth.
+\f0 \cf0 \
+                <br>\
+                <img src=\'93early_2.png" width="500"/><br><br>\
+	     
+\f1 \cf2 I also experimented with just drawing dots or lines instead of full cylinders, and I liked this effect better (plus it was faster to render).\
+
+\f0 \cf0                 <br>\
+                <img src=\'93early_3.png" width="500"/><br><br>\
+	     
+\f1 \cf2 I spent a long time scaling the radii so the data would be visible, and the key turned out to be a log scale, which highlights the most popular while allowing small numbers of checkouts to still be visible. I also decided to use HSB color scheme, and I scaled saturation and brightness linearly with number of checkouts to emphasize the changing radius effect. I chose a different hue to represent each country.\
+
+\f0 \cf0                 <br>\
+	     
+\f1 \cf2 Each object itself is 3D, but when it came to arranging them in space, I was not sure of the best way. I started with a simple 2D sheet of them, arranged by Dewey number, and I thought it worked well. Unlike a few other, more complex arrangements, this one didn't block data from view. I also decided to draw the objects for all the countries on top of each other, so the dominant countries for each topic can be easily compared. Changing the locations was made much easier by making each object an instance of a class I called "Bead," where each Bead object stored its own location and had its own draw method.\
+	     <br>\
+
+\f0 \cf0                 <img src=\'93early_4.png" width="500"/><br><br>\
+	     Figuring out the camera was one of the most difficult parts of this project, but I got it down pretty well by the end. I spent time deciding on the best views to present the data in. Since there is a lot of data for a user to explore, I wanted to facilitate looking at the patterns on a large scale as well as zooming into individual objects. I decided on a top view and a side view with constrained rotation to encourage scrolling / panning.\
+            </div>\
+            <div class="line"><hr noshade size="1"></div> \
+            \
+             <!-- Final Section -->\
+            <div class="left_column"><strong>Final result</strong></div>\
+            <div class="right_column">    \
+                <img src="final_three.png" width="500"/><br><br>\
+                <img src="final_four.png" width="500"/><br><br>\
+                
+\f1 \cf2 My final visualization includes all the objects for the non-Dewey items as well as each Dewey category (starting with 200, since there is very little interesting data in 000-199). Starting the sketch shows the objects head-on in dot mode, but pressing "r" or "h" will bring the viewer to a more instructive top or side view. Pressing "s" (or switching to the preprogrammed views) will also plot in spiral mode, which for some reason is much faster to render than dots.
+\f0 \cf0 \
+                <br>\
+                <img src=\'93top_view_dots.png" width="500"/><br><br>\
+                <img src=\'93side_view_spirals.png" width="500"/><br><br>\
+                
+\f1 \cf2 In addition to switching between dots and spirals and changing views, there are other interactive features. Since there is a lot of data and a lot of interesting patterns, I wanted to make exploration easy for the user. Pressing the keys 1-6 will toggle each country on and off. Mousing over the center of an object will display that object's Dewey number and topic name, for better understanding the patterns. Pressing "t" turns on a mode that also prints month and year coordinates around an object when mousing over it. Other keys will also turn on and off the major class labels on the side, and the instructional interface itself. Finally, since switching to the pre-programmed views restricts rotation ability, pressing the space bar restores full camera control.
+\f0 \cf0 \
+                <br>\
+                <img src=\'93music_countries.png" width="500"/><br><br>\
+                <br>\
+                This example from the side view shows the Dewey numbers associated with music, with only three countries turned on. In this view, one can see that different countries dominate in different subcategories of music; for example, Spain has the most \'93Stringed instruments\'94 media (third from left).\
+            </div>\
+            <div class="line"><hr noshade size="1"></div> \
+\
+<!-- Analysis Section -->\
+            <div class="left_column"><strong>Analysis</strong></div>\
+            <div class="right_column">    \
+                
+\f1 \cf2 There are a lot of interesting patterns to discover in this data. Overall, I felt some of the most interesting sections were history/geography and social sciences, where certain countries were much more prominent in some areas than others, such as the topics corresponding to their continent's history. A few interesting observations: Almost all of the religion section topics are devoted to Christianity, so Ireland and Spain are widespread and countries with other primary religions are relegated to the "other" subsection -- except Israel, which is the most prominent country in the "Bible" topics. China, Japan, and Spain have many more cookbooks than Israel, Ireland, and Cuba. China dominates most of the technology section, and Japan most of the arts section, while the most popular languages to learn are clearly Chinese and Spanish. Japan is well-represented in sci-fi, and Ireland in mystery. Topics where all countries are similarly well represented include the music section and the "history of the United States" section, as well as biographies.
+\f0 \cf0 \
+                <br>\
+
+\f1 \cf2 The time frequency patterns are often more subtle than topic variations, but one notable long-term change is the slow dying out of VHS checkouts after about 2008 for all countries, and a notable yearly cycle is the uptick in checkouts about Chinese customs in January/February, around the time of the Chinese New Year.
+\f0 \cf0 \
+                <br>\
+                <img src=\'93vhs_cd_dvd.png" width="500"/><br><br>\
+                <img src=\'93chinese_customs.png" width="500"/><br><br>\
+                            </div>\
+            <div class="line"><hr noshade size="1"></div> \
+            \
+             <!-- Source Code Section -->\
+            <div class="left_column"><strong>Code</strong></div>\
+            <div class="right_column">\
+                All work is developed within Processing<br>\
+                <!-- Please put the link of the source code and data below -->\
+                <a href="ForgottenBooks.zip">Source Code + Data</a><br><br>    \
+            </div>\
+            <div class="line"><hr noshade size="1"></div> \
+        </div><!--END WRAP-->\
+    </BODY>\
+</HTML>}
