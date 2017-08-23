@@ -55,13 +55,13 @@ float countryHue(String cName) {
                   return hue;
     case "Mexico": hue = 0;
                    return hue;
-    case "Ireland": hue = 45;
+    case "Ireland": hue = 65;
                     return hue;
     case "Egypt": hue = 0;
                   return hue;
     case "Japan": hue = 100;
                   return hue;
-    case "Cuba": hue = 0;
+    case "Cuba": hue = 300;
                  return hue;
     case "Germany": hue = 0;
                     return hue;

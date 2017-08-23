@@ -19,17 +19,19 @@ PeasyCam cam;
 
 // for bead array
 //int nBeads;
-ArrayList<Bead> AllBeads = new ArrayList<Bead>();
+//ArrayList<Bead> AllBeads = new ArrayList<Bead>();
 int bead_type = 1;
-int nCs = 2;
-int deweyPerClass = 1; 
-int noClasses = 1;
+int nCs = 4;
+int deweyPerClass = 10; 
+int noClasses = 10;
+int startDewey = 900;
+Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];
 
 // individual bead sizes
 int startYear = 2006;  // time vars = bead angle
 int noYears = 11;      // number of years per dewey class
 int noMonths = 12;
-float rScale = 100;
+float rScale = 10;
 
 // bead arrangement
 float bH = 50;
@@ -45,6 +47,9 @@ Table totals;
 float[][] beadMatrix;
 float[][] maxMatrix;
 float[][] totMatrix;
+
+// interaction
+boolean cSwitch[] = new boolean[nCs];
 
 // for bead testing
 int cInd = 11; // china
@@ -66,6 +71,11 @@ void setup(){
   // create a single Bead matrix
   beadMatrix = new float[noYears][noMonths];
   
+  // set all cs on
+  for (int c=0; c<nCs; c++) {
+    cSwitch[c] = true;
+  }
+  
   // create each bead in a for loop
  for (int c=0; c<nCs; c++) {
    
@@ -76,13 +86,15 @@ void setup(){
     break;
     case 2: cName = "Israel";
     break;
-    default: cName = "Egypt";
+    default: cName = "Cuba";
     break;
   }
    
-  for (int b=0+641; b<nBeads+641; b++) {
+  for (int b=0; b<nBeads; b++) {
+    
     
     // initialize all bead matrix to 0
+    beadMatrix = new float[noYears][noMonths];
     for (int m=0; m<noMonths; m++) {
       for (int w=0; w<noYears; w++) {
         beadMatrix[w][m] = 0;
@@ -90,7 +102,7 @@ void setup(){
     }
     
     // fill bead matrix
-      for(TableRow row : table.matchRows(str(b),"deweyBin")) {
+      for(TableRow row : table.matchRows(str(b+startDewey),"deweyBin")) {
         for (int m=0; m<noMonths; m++) {
           for (int w=0; w<noYears; w++){
             int yr = w + startYear;
@@ -105,26 +117,22 @@ void setup(){
       }
     
     // find Bead location
-    float bX = floor((b-641)/deweyPerClass) * classSpacing;
-    float bZ = ((b-641) % deweyPerClass) * (bH + beadSpacing);
+    float bX = floor(b/deweyPerClass) * classSpacing;
+    float bZ = (b % deweyPerClass) * (bH + beadSpacing);
     
     // save max
     overallMax = max(overallMax,max2D(beadMatrix));
     
-    println(b);
-    println(max2D(beadMatrix));
-    println(cName);
-    
-    
     // create Bead in Bead array
-    AllBeads.add(new Bead(beadMatrix,bX,0,bZ,bH,cName));
+    allBeads[b][c] = new Bead(beadMatrix,bX,0,bZ,bH,cName);
     
-    println(AllBeads.get(AllBeads.size()-1).beadMax);
-    println(AllBeads.get(AllBeads.size()-1).nCheckouts[0]);
-    
-  }
- }
-  
+  } // end loop over number of beads
+ }  // end loop over number of countries
+ 
+  println(allBeads.length);
+ //       println(allBeads[b][c].beadMax);
+  //    println(allBeads[b][c].cName);
+    //  println(log(allBeads[b][c].beadMax)+rScale);
 }
 
 void draw(){
@@ -134,10 +142,15 @@ void draw(){
   surface.setResizable(true);
   
   background(230);
+  translate(width/2 - (noClasses*classSpacing)/2,height/2,100);
     
   // draw data points
-  for(int i=0; i<AllBeads.size(); i++) {        
-    AllBeads.get(i).drawBead();
+  for(int c=0; c<nCs; c++) {
+    for (int b=0; b<noClasses*deweyPerClass; b++) {
+      if (cSwitch[c] == true) {
+        allBeads[b][c].drawBead();
+      }
+    }
   }
   
     //float bx = AllBeads.get(AllBeads.size()-1).beadX; //map(timeParser(Books.get(i).time),  t0, tend, -boxSize/2, boxSize/2);
