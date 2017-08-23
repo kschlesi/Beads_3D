@@ -13,31 +13,32 @@ Usage: 1. A mouse left-drag will rotate the camera around the subject.
           4. A double-click restores the camera to its original position. 
           5. The shift key constrains rotation and panning to one axis or the other.
 *************************************************************************************/
-
+// declare camera
 import peasy.*;
 PeasyCam cam;
-int camMode = 0;
 
-// for bead array
-//int nBeads;
-//ArrayList<Bead> AllBeads = new ArrayList<Bead>();
-int bead_type = 1;
-int nCs = 6;
-int deweyPerClass = 10; 
-int noClasses = 10;
-int startDewey = 000;
-Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];
+// general bead organization
+int bead_type = 1;    // dots, spiral lines, or objects
+int nCs = 6;          // number of countries
+int noClasses = 1;    // number of dewey classes
+int deweyPerClass = 30;  // number of beads per class (same for all)
+int startDewey = 000; // start dewey number (all must be sequential)
+int nBeads = noClasses * deweyPerClass;  // total bead number per country
+Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];  // init bead array
 
 // individual bead sizes
 int startYear = 2006;  // time vars = bead angle
 int noYears = 11;      // number of years per dewey class
-int noMonths = 12;
-float rScale = 10;
+int noMonths = 12;     // number of months per year
+float rScale = 10;     // radius scale
+String cName;          // initialize string for bead country name
 
-// bead arrangement
-float bH = 50;
-float classSpacing = 50;
-float beadSpacing = 50;
+// bead arrangement in space
+float bH = 50;            // bead height
+float colSpacing = 50;    // space between strings (cols)
+float beadSpacing = 50;   // space between beads (rows)
+int colsPerClass = 10;    // number of cols per dewey class
+int rowsPerClass = ceil(deweyPerClass / colsPerClass); 
 
 // min and max values for 
 // saturation and brightness
@@ -46,42 +47,37 @@ float satMax = 99; //99
 float briMin = 35; //10
 float briMax = 99; //99
 
-//// min value for single bead radius
-//float radMin = 1;
-//float radMax = 10;
-
 // for input data storage
 Table table;
-Table countries;
-Table maxes;
-Table totals;
-float[][] beadMatrix;
-float[][] maxMatrix;
-float[][] totMatrix;
+//Table countries;
+//Table maxes;
+//Table totals;
+float[][] beadMatrix;  // holds bead checkout values
+//float[][] maxMatrix;   // holds max checkout vals 
+//float[][] totMatrix;   // hold total checkout vals
 
 // interaction
 boolean cSwitch[] = new boolean[nCs];
-
-// for bead testing
-String cName;
-int nBeads = noClasses * deweyPerClass;
+boolean iSwitch;
 
 void setup(){
+  // size and view
   size(1300, 1300, P3D);
   colorMode(HSB, 360, 100, 100);
-  cam = new PeasyCam(this, deweyPerClass*(bH+beadSpacing)+500); //2000
+  translate(width/2 - colSpacing/2,height/2,0);
+  cam = new PeasyCam(this, 500);
   perspective(PI/20, width/height, 1, 10000);
-  //cam.rotateX(1/(tan(25/(deweyPerClass*(bH+beadSpacing))))); // pitch up
   cam.setWheelScale(0.1);
   
   // load in data to tables
-  countries = loadTable("q3_countries.csv");
   table = loadTable("q3_country_dewey_3D.csv", "header");
-  maxes = loadTable("q3_cdy_maxbins.csv","header");
-  totals = loadTable("q3_cdy_totcout.csv");
+  //maxes = loadTable("q3_cdy_maxbins.csv","header");
+  //totals = loadTable("q3_cdy_totcout.csv");
+  //countries = loadTable("q3_countries.csv");
   
-  // set all country display switches to true
-  for (int c=0; c<nCs; c++) {
+  // set all interaction switches to defaults
+  iSwitch = true;              // instructions on
+  for (int c=0; c<nCs; c++) {  // all countries on
     cSwitch[c] = true;
   }
   
@@ -127,15 +123,18 @@ void setup(){
       }
     
     // find Bead location
-    float bX = floor(b/deweyPerClass) * classSpacing - (noClasses*classSpacing)/2; 
-    float bZ = (b % deweyPerClass) * (bH + beadSpacing);
+    int bClass = floor(b/deweyPerClass);                        // current class
+    int bRow = floor((b-bClass*deweyPerClass)/colsPerClass);    // current row IN CLASS
+    int bCol = (b-bClass*deweyPerClass) % colsPerClass;         // current col
+    float bX = bCol * colSpacing - (colsPerClass * colSpacing)/2;           // x pos
+    float bZ = -1 * (bRow + (rowsPerClass * bClass)) * (bH + beadSpacing);  // z pos
     
     // create Bead in Bead array
     allBeads[b][c] = new Bead(beadMatrix,bX,0,bZ,bH,cName);
     
   } // end loop over number of beads
  }  // end loop over number of countries
- 
+
 }
 
 void draw(){
@@ -144,37 +143,18 @@ void draw(){
   // Make the screen resizable.            
   surface.setResizable(true);
   
+  // set background and initial position of array
   background(250);
-  translate(width/2+classSpacing/2,height/2,0);    
-  cam.lookAt(width/2+classSpacing/2,height/2,0); // 50 ms animation time
-
-  // set a particular camera view
-  switch (camMode) {
-    // road view
-    case 1: cam.reset(50); // 50 ms to reset
-            cam.setRotations(radians(30),0,0); // pitch up
-            cam.setFreeRotationMode();
-            //cam.setSuppressRollRotationMode();
-            //cam.setPitchRotationMode();
-            break;
-    // hanging view
-    case 2: float camrot[] = cam.getRotations();
-            double camdist = cam.getDistance();
-            println(camrot[0],camrot[1],camrot[2],camdist);
-            break;
-    // unconstrain view
-    case 0: cam.setFreeRotationMode();
-            break;
-  }
-    
+  //translate(width/2-colSpacing/2,height/2,0);
+  cam.rotateX(0);
     
   // draw beadstrings
-  for (int s=0; s<noClasses; s++){
-    float strx = s*classSpacing - (noClasses*classSpacing)/2;
-    float strz = deweyPerClass * (bH + beadSpacing);
+  for (int s=0; s<colsPerClass; s++){
+    float strx = s*colSpacing - (colsPerClass*colSpacing)/2;
+    float strz = -1 * ((rowsPerClass*noClasses-1) * (bH + beadSpacing));
     stroke(0,0,75);
     strokeWeight(1);
-    line(strx, 0, 0, strx, 0, strz);    
+    line(strx, 0, beadSpacing, strx, 0, strz);    
   }
     
   // draw data points
@@ -186,10 +166,10 @@ void draw(){
     }
   }
   
-    //float bx = AllBeads.get(AllBeads.size()-1).beadX; //map(timeParser(Books.get(i).time),  t0, tend, -boxSize/2, boxSize/2);
-    //float by = AllBeads.get(AllBeads.size()-1).beadY; //map(dateParser(Books.get(i).date),  d0, dend, -boxSize/2, boxSize/2);
-    //float bz = AllBeads.get(AllBeads.size()-1).beadZ; //map(log(Books.get(i).count), log(c0), log(cend), -boxSize/2, boxSize/2);
-  //translate(bx,by,bz);
-
+  // draw labels
+  // topic labels
+  //if(lSwitch==true) {
+  //  
+  //}
    
 }

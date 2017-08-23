@@ -12,13 +12,13 @@ void keyPressed()
   //  else if (colorSwitch==false) colorSwitch = true; 
   //}
   
-  if (key == 'd' || key == 'l' || key == 'c' || key == 'o' ) { 
+  if (key == 'd' || key == 's' || key == 'c' || key == 'f' ) { 
     // bead_type 1 is default (dot spiral)
     // set new bead_type
     if (key == 'd') bead_type = 1;
-    if (key == 'l') bead_type = 2;
+    if (key == 's') bead_type = 2;
     if (key == 'c') bead_type = 3;
-    if (key == 'o') bead_type = 4;
+    if (key == 'f') bead_type = 4;
   }
   
   if (key == '2') {
@@ -62,12 +62,22 @@ void keyPressed()
   if (key == 'r' || key == 'h' || key == ' ') { 
     // bead_type 1 is default (dot spiral)
     // set new bead_type
-    if (key == 'r') camMode = 1; // road
-    if (key == 'h') camMode = 2; // hanging
-    if (key == ' ') camMode = 0; // reset
+    if (key == 'r') { // road view
+      cam.reset(0);   // immediate reset
+      cam.setRotations(radians(30),0,0); // pitch up for angled view
+      cam.setPitchRotationMode();  // allow pitch rotation only
+      //cam.setSuppressRollRotationMode();
+    }
+    if (key == 'h') {
+      bead_type = 2;
+      cam.reset(0);
+      cam.setRotations(PI/2,0,PI);
+    }; // hanging
+    if (key == ' ') cam.setFreeRotationMode(); // unrestrict
   }
   
 }
+
 
 
 
