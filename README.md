@@ -1,37 +1,16 @@
-## Welcome to GitHub Pages
+## International SPL
 
-You can use the [editor on GitHub](https://github.com/kschlesi/Beads_3D/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+How do users of the Seattle Public Library engage with other countries and cultures? This project provides a view of the world from Seattle, in the form of an interactive, 3D data visualization based on millions of checkout records from the library between 2005 and 2015.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This visualization is implemented in Processing, and aided by data analysis performed in MySQL and Python. It was conceived and created as part of a course on algorithmic data visualization at the University of California, Santa Barbara.
 
-### Markdown
+A detailed description of the process can be found at the UCSB Media Arts & Technology Vis Lab [website](http://vislab.mat.ucsb.edu/2017/p2/KimberlySchlesinger/index.html).
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+#### Organization
 
-```markdown
-Syntax highlighted code block
+The Processing language implements the visualization/sketch as a Java applet. The Processing code -- including the setup, data import, class definitions, drawing, and interactive controls -- is contained in `.pde` files in the sketch folder `Beads_3DvF`. The supplementary Python data analysis scripts are included as well.
 
-# Header 1
-## Header 2
-### Header 3
+#### More Info
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kschlesi/Beads_3D/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+ - For more info about the creator, see [kschlesi](http://kschlesi.github.io)
+ - For more info about the project, see the write-up [here](http://vislab.mat.ucsb.edu/2017/p2/KimberlySchlesinger/index.html)
