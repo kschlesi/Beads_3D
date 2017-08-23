@@ -77,6 +77,24 @@ float countryHue(String cName) {
   }
 }
 
+String countryName(int c) {
+  switch(c) {
+    case 0: cName = "China";
+    break;
+    case 1: cName = "Ireland";
+    break;
+    case 2: cName = "Israel";
+    break;
+    case 3: cName = "Spain";
+    break;
+    case 4: cName = "Japan";
+    break;
+    default: cName = "Cuba";
+    break;
+  }
+  return cName;
+}
+
 String deweyTitle(int dClass) {
 // gives string reg exp for dewey class
   String deweyClass;
@@ -86,47 +104,51 @@ String deweyTitle(int dClass) {
   switch(dClass){
     case 1: deweyClass = "100";
             deweyRegExp = "1..";
-            deweyTitle = "Philosophy & psychology";
+            deweyTitle = "philosophy & psychology";
             break;
     case 2: deweyClass = "200";
             deweyRegExp = "2..";
-            deweyTitle = "Religion";
+            deweyTitle = "religion";
             break;
     case 3: deweyClass = "300";
             deweyRegExp = "3..";
-            deweyTitle = "Social sciences & politics";
+            deweyTitle = "social sciences & politics";
             break;
     case 4: deweyClass = "400";
             deweyRegExp = "4..";
-            deweyTitle = "Languages";
+            deweyTitle = "languages";
             break;
     case 5: deweyClass = "500";
             deweyRegExp = "5..";
-            deweyTitle = "Science";
+            deweyTitle = "science";
             break;
     case 6: deweyClass = "600";
             deweyRegExp = "6..";
-            deweyTitle = "Technology";
+            deweyTitle = "technology";
             break;
     case 7: deweyClass = "700";
             deweyRegExp = "7..";
-            deweyTitle = "Arts & recreation";
+            deweyTitle = "arts & recreation";
             break;
     case 8: deweyClass = "800";
             deweyRegExp = "8..";
-            deweyTitle = "Literature";
+            deweyTitle = "literature";
             break;
     case 9: deweyClass = "900"; // dewey level 900 is default
             deweyRegExp = "9..";
-            deweyTitle = "History & geography";
+            deweyTitle = "history & geography";
             break;
     case 0: deweyClass = "000";
             deweyRegExp = "^[0-9]?0$";
-            deweyTitle = "Computer science & information";
+            deweyTitle = "computer science & information";
             break;
     default: deweyRegExp = "900";
              deweyClass = "9.."; 
              deweyTitle = "History & geography";
   }
   return deweyTitle;
+}
+
+String deweyLabel(int dNum) {
+  return "StringforNow...";
 }

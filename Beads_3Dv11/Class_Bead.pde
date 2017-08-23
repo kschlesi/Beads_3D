@@ -7,8 +7,9 @@ class Bead{
   float beadMax;
   String cName;
   float hue;
+  int deweyNumber;
   
-  Bead(float[][] nCheckouts, float beadX, float beadY, float beadZ, float beadHeight, String cName){
+  Bead(float[][] nCheckouts, float beadX, float beadY, float beadZ, float beadHeight, String cName, int deweyNumber){
     this.nCheckouts = nCheckouts;
     this.nSlices = nCheckouts.length;
     this.nTimeUnits = nCheckouts[0].length;
@@ -21,10 +22,7 @@ class Bead{
     this.beadMax = max2D(nCheckouts);
     this.cName = cName;
     this.hue = countryHue(cName);
-    
-    //this.drawBead();
-    //this.drawDotSpiral();
-    //this.drawLineSpiral();
+    this.deweyNumber = deweyNumber;
   }
   
   void drawBead() {
@@ -172,7 +170,7 @@ class Bead{
       }
       popMatrix();
     }
-} // end draw of full shape 
+  } // end drawSlice function 
       
   float sliceZ(int j) {
     // for the jth slice out of nSlices, returns relative z location 
