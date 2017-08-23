@@ -6,6 +6,7 @@ class Bead{
   float[] nextRadii;
   float beadMax;
   String cName;
+  float hue;
   
   Bead(float[][] nCheckouts, float beadX, float beadY, float beadZ, float beadHeight, String cName){
     this.nCheckouts = nCheckouts;
@@ -19,6 +20,7 @@ class Bead{
     this.dotHeight = sliceHeight / nTimeUnits;
     this.beadMax = max2D(nCheckouts);
     this.cName = cName;
+    this.hue = countryHue(cName);
     
     this.drawBead();
   }
@@ -31,7 +33,6 @@ class Bead{
     
     // for loop: draws a bead by drawing all slices
     for(int i=0; i<nSlices+1; i++) {
-      float rScale = 10;
     
       // set radii
       if (i==0) {
@@ -61,13 +62,13 @@ class Bead{
       
       // scale radius to beadMax
       switch(bead_type) {
-        case 1: drawDotSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,countryHue(cName));
+        case 1: drawDotSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,hue);
                 break;
-        case 2: drawLineSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,countryHue(cName));
+        case 2: drawLineSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,hue);
                 break;
-        case 3: drawDisc(rScale,thisRadii,sliceHeight,beadMax,countryHue(cName));
+        case 3: drawDisc(rScale,thisRadii,sliceHeight,beadMax,hue);
                 break;
-        case 4: drawSlice(rScale,thisRadii,nextRadii,sliceHeight,beadMax,countryHue(cName));
+        case 4: drawSlice(rScale,thisRadii,nextRadii,sliceHeight,beadMax,hue);
                 break;
       }
       
