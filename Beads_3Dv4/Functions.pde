@@ -1,3 +1,6 @@
+float sbMin = 45;
+float sbMax = 99;
+
 void drawSlice(float rTop, float rBottom, float[] tRadii, float[] bRadii, float sliceHeight, float beadMax, float hue)
 {
     int sides = tRadii.length;
@@ -14,10 +17,11 @@ void drawSlice(float rTop, float rBottom, float[] tRadii, float[] bRadii, float 
     for (int i = 0; i < sides; i++) {
       if (i>=sides) println(i + " " + str(i % sides) + "top");
         float radT = rTop * tRadii[i % sides] / tMax;
-        float radmapT = map(radT,0,beadMax,1,99);
+        float radmapT = map(radT,0,beadMax,sbMin,sbMax);
         float x = cos( radians( i * angle ) ) * radT;
         float y = sin( radians( i * angle ) ) * radT;
         stroke(hue,radmapT,radmapT);
+        fill(hue,radmapT,radmapT);
         vertex( x, y, -halfHeight);
     }
     endShape(CLOSE);
@@ -26,11 +30,12 @@ void drawSlice(float rTop, float rBottom, float[] tRadii, float[] bRadii, float 
     for (int i = 0; i < sides; i++) {
       if (i>=sides) println(i + " " + str(i % sides) + "bot");
         float radB = rBottom * bRadii[i % sides] / bMax;
-        float radmapB = map(radB,0,beadMax,1,99);
+        float radmapB = map(radB,0,beadMax,sbMin,sbMax);
         float x = cos( radians( i * angle ) ) * radB;
         float y = sin( radians( i * angle ) ) * radB;
         stroke(hue,radmapB,radmapB);
         strokeWeight(2);
+        fill(hue,radmapB,radmapB);
         vertex( x, y, halfHeight);
     }
     endShape(CLOSE);
@@ -40,13 +45,14 @@ void drawSlice(float rTop, float rBottom, float[] tRadii, float[] bRadii, float 
       if (i>=sides) println(i + " " + str(i % sides) + "mid");
         float radT = rTop * tRadii[i % sides] / tMax;
         float radB = rBottom * bRadii[i % sides] / bMax;
-        float radmapMean = (map(radT,0,beadMax,1,99) + map(radB,0,beadMax,1,99))/2;
+        float radmapB = max(map(radT,0,beadMax,sbMin,sbMax), map(radB,0,beadMax,1,99));
         float x1 = cos( radians( i * angle ) ) * radT;
         float y1 = sin( radians( i * angle ) ) * radT;
         float x2 = cos( radians( i * angle ) ) * radB;
         float y2 = sin( radians( i * angle ) ) * radB;
-        stroke(hue,radmapMean,radmapMean);
+        stroke(hue,radmapB,radmapB);
         strokeWeight(2);
+        fill(hue,radmapB,radmapB);
         vertex( x1, y1, -halfHeight);
         vertex( x2, y2, halfHeight);
     }
@@ -63,7 +69,7 @@ void drawDotSpiral(float rScale, float[] tRadii, float sliceHeight, float beadMa
     // draw a point spiral (one rotation)
     for (int i = 0; i < dots; i++) {
         float rad = rScale * tRadii[i] / beadMax;
-        float radmap = map(rad,0,beadMax,1,99);
+        float radmap = map(rad,0,beadMax,sbMin,sbMax);
         float x = cos( radians( i * angle ) ) * rad;
         float y = sin( radians( i * angle ) ) * rad;
         stroke(hue,radmap,radmap);
@@ -84,7 +90,7 @@ void drawLineSpiral(float rScale, float[] tRadii, float sliceHeight, float beadM
     beginShape();
     for (int i = 0; i < dots; i++) {
         float rad = rScale * tRadii[i] / beadMax;
-        float radmap = map(rad,0,beadMax,1,99);
+        float radmap = map(rad,0,beadMax,sbMin,sbMax);
         float x = cos( radians( i * angle ) ) * rad;
         float y = sin( radians( i * angle ) ) * rad;
         stroke(hue,radmap,radmap);
@@ -104,7 +110,7 @@ void drawDisc(float rScale, float[] tRadii, float sliceHeight, float beadMax, fl
     beginShape();
     for (int i = 0; i < dots; i++) {
         float rad = rScale * tRadii[i] / beadMax;
-        float radmap = map(rad,0,beadMax,1,99);
+        float radmap = map(rad,0,beadMax,sbMin,sbMax);
         float x = cos( radians( i * angle ) ) * rad;
         float y = sin( radians( i * angle ) ) * rad;
         stroke(hue,radmap,radmap);
