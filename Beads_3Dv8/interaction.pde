@@ -45,8 +45,31 @@ void keyPressed()
     else if (cSwitch[0]==false) cSwitch[0] = true;
     }
   }
+  if (key == '5') {
+    if (nCs>=5){
+    if (cSwitch[4]==true) cSwitch[4] = false;
+    else if (cSwitch[4]==false) cSwitch[4] = true;
+    }
+  }
+  if (key == '6') {
+    if (nCs>=6){
+    if (cSwitch[5]==true) cSwitch[5] = false;
+    else if (cSwitch[5]==false) cSwitch[5] = true;
+    }
+  }
+  
+  // set camera modes
+  if (key == 'r' || key == 'h' || key == ' ') { 
+    // bead_type 1 is default (dot spiral)
+    // set new bead_type
+    if (key == 'r') camMode = 1; // road
+    if (key == 'h') camMode = 2; // hanging
+    if (key == ' ') camMode = 0; // reset
+  }
   
 }
+
+
 
 //// mouse position: resets overGrid, 
 //// sets locaton vars mYear, mDewey, mCountry

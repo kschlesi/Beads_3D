@@ -1,14 +1,3 @@
-// min and max values for 
-// saturation and brightness
-float satMin = 35;
-float satMax = 99;
-float briMin = 10;
-float briMax = 99;
-
-// min value for single bead radius
-float radMin = 1;
-float radMax = 10;
-
 //void drawSlice(float rScale, float[] tRadii, float[] bRadii, float sliceHeight, float beadMax, float hue)
 //{
 //    int sides = tRadii.length;
@@ -155,34 +144,34 @@ float radMax = 10;
 //    endShape(OPEN);
 //} 
 
-void drawDisc(float rScale, float[] tRadii, float sliceHeight, float beadMax, float hue)
-{
-    int dots = tRadii.length;
-    float angle = 360 / dots;
-    float halfHeight = sliceHeight / 2;
-    float tMax = max1D(tRadii);
-    //float tMax = beadMax;
-    if (tMax==0) tMax = 1;
+//void drawDisc(float rScale, float[] tRadii, float sliceHeight, float beadMax, float hue)
+//{
+//    int dots = tRadii.length;
+//    float angle = 360 / dots;
+//    float halfHeight = sliceHeight / 2;
+//    float tMax = max1D(tRadii);
+//    //float tMax = beadMax;
+//    if (tMax==0) tMax = 1;
 
-    // draw a point disc (one rotation)
-    beginShape();
-    for (int i = 0; i < dots; i++) {
-      if (beadMax>0) {
-        float radmap = map(tRadii[i],0,overallMax,radMin,radMax);
-        float satmap = map(tRadii[i],0,overallMax,satMin,satMax);
-        float brimap = map(tRadii[i],0,overallMax,briMin,briMax);
-        float x = cos( radians( i * angle ) ) * log(radmap) * rScale;
-        float y = sin( radians( i * angle ) ) * log(radmap) * rScale;
-        stroke(hue,satmap,brimap);
-        strokeWeight(2);
-        fill(hue,satmap,brimap);
-        vertex(x, y, halfHeight);
-      }
-      else {
-        stroke(hue,0,0);
-        strokeWeight(2);
-        point(0, 0, halfHeight);
-      }
-    }
-    endShape(CLOSE);
-} 
+//    // draw a point disc (one rotation)
+//    beginShape();
+//    for (int i = 0; i < dots; i++) {
+//      if (beadMax>0) {
+//        float radmap = map(tRadii[i],0,overallMax,radMin,radMax);
+//        float satmap = map(tRadii[i],0,overallMax,satMin,satMax);
+//        float brimap = map(tRadii[i],0,overallMax,briMin,briMax);
+//        float x = cos( radians( i * angle ) ) * log(radmap) * rScale;
+//        float y = sin( radians( i * angle ) ) * log(radmap) * rScale;
+//        stroke(hue,satmap,brimap);
+//        strokeWeight(2);
+//        fill(hue,satmap,brimap);
+//        vertex(x, y, halfHeight);
+//      }
+//      else {
+//        stroke(hue,0,0);
+//        strokeWeight(2);
+//        point(0, 0, halfHeight);
+//      }
+//    }
+//    endShape(CLOSE);
+//} 

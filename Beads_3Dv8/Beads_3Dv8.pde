@@ -16,15 +16,16 @@ Usage: 1. A mouse left-drag will rotate the camera around the subject.
 
 import peasy.*;
 PeasyCam cam;
+int camMode = 0;
 
 // for bead array
 //int nBeads;
 //ArrayList<Bead> AllBeads = new ArrayList<Bead>();
 int bead_type = 1;
-int nCs = 4;
+int nCs = 6;
 int deweyPerClass = 10; 
 int noClasses = 10;
-int startDewey = 900;
+int startDewey = 000;
 Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];
 
 // individual bead sizes
@@ -37,7 +38,17 @@ float rScale = 10;
 float bH = 50;
 float classSpacing = 50;
 float beadSpacing = 50;
-float overallMax = 0;
+
+// min and max values for 
+// saturation and brightness
+float satMin = 35; //35
+float satMax = 99; //99
+float briMin = 35; //10
+float briMax = 99; //99
+
+//// min value for single bead radius
+//float radMin = 1;
+//float radMax = 10;
 
 // for input data storage
 Table table;
@@ -52,14 +63,15 @@ float[][] totMatrix;
 boolean cSwitch[] = new boolean[nCs];
 
 // for bead testing
-int cInd = 11; // china
-String cName = "China";
+String cName;
 int nBeads = noClasses * deweyPerClass;
 
 void setup(){
   size(1300, 1300, P3D);
   colorMode(HSB, 360, 100, 100);
-  cam = new PeasyCam(this, 300);
+  cam = new PeasyCam(this, deweyPerClass*(bH+beadSpacing)+500); //2000
+  perspective(PI/20, width/height, 1, 10000);
+  //cam.rotateX(1/(tan(25/(deweyPerClass*(bH+beadSpacing))))); // pitch up
   cam.setWheelScale(0.1);
   
   // load in data to tables
@@ -68,10 +80,7 @@ void setup(){
   maxes = loadTable("q3_cdy_maxbins.csv","header");
   totals = loadTable("q3_cdy_totcout.csv");
   
-  // create a single Bead matrix
-  beadMatrix = new float[noYears][noMonths];
-  
-  // set all cs on
+  // set all country display switches to true
   for (int c=0; c<nCs; c++) {
     cSwitch[c] = true;
   }
@@ -86,12 +95,15 @@ void setup(){
     break;
     case 2: cName = "Israel";
     break;
+    case 3: cName = "Spain";
+    break;
+    case 4: cName = "Japan";
+    break;
     default: cName = "Cuba";
     break;
   }
    
   for (int b=0; b<nBeads; b++) {
-    
     
     // initialize all bead matrix to 0
     beadMatrix = new float[noYears][noMonths];
@@ -108,20 +120,15 @@ void setup(){
             int yr = w + startYear;
             int mn = m + 1;
             if (row.getInt("year(cout)")==yr && row.getInt("month(cout)")==mn) {
-              //println("filling matrix [" + w + "][" + m + "]");
               beadMatrix[w][m] = row.getFloat(cName);
-              //println(mn + "/" + yr + "," + row.getInt("month(cout)") + "/" + row.getInt("year(cout)") + "," + beadMatrix[y][m]);
             }
           }
         }
       }
     
     // find Bead location
-    float bX = floor(b/deweyPerClass) * classSpacing;
+    float bX = floor(b/deweyPerClass) * classSpacing - (noClasses*classSpacing)/2; 
     float bZ = (b % deweyPerClass) * (bH + beadSpacing);
-    
-    // save max
-    overallMax = max(overallMax,max2D(beadMatrix));
     
     // create Bead in Bead array
     allBeads[b][c] = new Bead(beadMatrix,bX,0,bZ,bH,cName);
@@ -129,10 +136,6 @@ void setup(){
   } // end loop over number of beads
  }  // end loop over number of countries
  
-  println(allBeads.length);
- //       println(allBeads[b][c].beadMax);
-  //    println(allBeads[b][c].cName);
-    //  println(log(allBeads[b][c].beadMax)+rScale);
 }
 
 void draw(){
@@ -141,8 +144,38 @@ void draw(){
   // Make the screen resizable.            
   surface.setResizable(true);
   
-  background(230);
-  translate(width/2 - (noClasses*classSpacing)/2,height/2,100);
+  background(250);
+  translate(width/2+classSpacing/2,height/2,0);    
+  cam.lookAt(width/2+classSpacing/2,height/2,0); // 50 ms animation time
+
+  // set a particular camera view
+  switch (camMode) {
+    // road view
+    case 1: cam.reset(50); // 50 ms to reset
+            cam.setRotations(radians(30),0,0); // pitch up
+            cam.setFreeRotationMode();
+            //cam.setSuppressRollRotationMode();
+            //cam.setPitchRotationMode();
+            break;
+    // hanging view
+    case 2: float camrot[] = cam.getRotations();
+            double camdist = cam.getDistance();
+            println(camrot[0],camrot[1],camrot[2],camdist);
+            break;
+    // unconstrain view
+    case 0: cam.setFreeRotationMode();
+            break;
+  }
+    
+    
+  // draw beadstrings
+  for (int s=0; s<noClasses; s++){
+    float strx = s*classSpacing - (noClasses*classSpacing)/2;
+    float strz = deweyPerClass * (bH + beadSpacing);
+    stroke(0,0,75);
+    strokeWeight(1);
+    line(strx, 0, 0, strx, 0, strz);    
+  }
     
   // draw data points
   for(int c=0; c<nCs; c++) {

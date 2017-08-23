@@ -41,8 +41,8 @@ class Bead{
                 break;
         //case 3: this.drawDisc();
         //        break;
-        //case 4: this.drawSlice();
-        //        break;
+        case 4: this.drawSlice();
+                break;
       }
     // finish draw of bead  
     popMatrix();
@@ -108,83 +108,71 @@ class Bead{
       endShape(OPEN);
   }
     
-  //void drawSlice()
-  //{
-  //  float angle = 360 / nTimeUnits;
-      
-  //  beginShape();
-  //  for (int d = 0; d < (nSlices*nTimeUnits); d++) {
-  //    float z = beadHeight/2 - dotHeight*d;
-  //    int mx = d % nTimeUnits;
-  //    int sx = floor(d/nTimeUnits);
-  //    float dval = nCheckouts[sx][mx];
-  //    if (beadMax>0) {
-  //      //float radmapT = map(tRadii[i % sides],0,beadMax,radMin,radMax);
-  //      float satmapT = map(tRadii[i % sides],0,beadMax,satMin,satMax);
-  //      float brimapT = map(tRadii[i % sides],0,beadMax,briMin,briMax);
-  //      float x = cos( radians( i * angle ) ) * log(dvalT+1) * rScale;
-  //      float y = sin( radians( i * angle ) ) * log(dvalT+1) * rScale;        
-  //      stroke(hue,satmapT,brimapT);
-  //      fill(hue,satmapT,brimapT);
-  //      vertex( x, y, -halfHeight);
-  //    }
-  //    else {
-  //      stroke(hue,0,0);
-  //      fill(hue,0,0);
-  //      vertex(0,0,-halfHeight);
-  //    }
-  //  }
-  //  endShape(CLOSE);
+  void drawSlice()
+  {
+    float angle = 360 / nTimeUnits;
     
-  //  // bottom
-  //  beginShape();
-  //  for (int i = 0; i < sides; i++) {
-  //    if (beadMax>0) {
-  //      float radmapB = map(bRadii[i % sides],0,beadMax,radMin,radMax);
-  //      float satmapB = map(bRadii[i % sides],0,beadMax,satMin,satMax);
-  //      float brimapB = map(bRadii[i % sides],0,beadMax,briMin,briMax);
-  //      float x = cos( radians( i * angle ) ) * log(radmapB) * rScale;
-  //      float y = sin( radians( i * angle ) ) * log(radmapB) * rScale;
-  //      stroke(hue,satmapB,brimapB);
-  //      strokeWeight(2);
-  //      fill(hue,satmapB,brimapB);
-  //      vertex( x, y, halfHeight);
-  //    }
-  //    else {
-  //      stroke(hue,0,0);
-  //      fill(hue,0,0);
-  //      vertex(0,0, halfHeight);
-  //    }
-  //  }
-  //  endShape(CLOSE);
+    // draw disc 
+    for (int s=0; s<nSlices; s++){
+      pushMatrix();
+      translate(0,0,sliceZ(s));
+      beginShape();
+      for (int d = 0; d < nTimeUnits; d++) {
+        float dval = nCheckouts[s][d];
+        if (beadMax>0) {
+          //float radmapT = map(tRadii[i % sides],0,beadMax,radMin,radMax);
+          float satmapT = map(dval,0,beadMax,satMin,satMax);
+          float brimapT = map(dval,0,beadMax,briMin,briMax);
+          float x = cos( radians( d * angle ) ) * log(dval+1) * rScale;
+          float y = sin( radians( d * angle ) ) * log(dval+1) * rScale;        
+          stroke(hue,satmapT,brimapT);
+          fill(hue,satmapT,brimapT);
+          vertex( x, y, -sliceHeight/2);
+        }
+        else {
+          stroke(hue,0,0);
+          fill(hue,0,0);
+          vertex(0,0,-sliceHeight/2);
+        }
+      }
+      popMatrix();
+    }
+    endShape(CLOSE);
     
-  //  // draw body
-  //  beginShape(TRIANGLE_STRIP);
-  //  for (int i = 0; i < sides + 1; i++) {
-  //    if (beadMax>0) {
-  //      float radmapT = map(tRadii[i % sides],0,beadMax,radMin,radMax);
-  //      float radmapB = map(bRadii[i % sides],0,beadMax,radMin,radMax);
-  //      float satmapM = max(map(tRadii[i % sides],0,beadMax,satMin,satMax), map(bRadii[i % sides],0,beadMax,satMin,satMax));
-  //      float brimapM = max(map(tRadii[i % sides],0,beadMax,briMin,briMax), map(bRadii[i % sides],0,beadMax,briMin,briMax));
-  //      float x1 = cos( radians( i * angle ) ) * log(radmapT) * rScale;
-  //      float y1 = sin( radians( i * angle ) ) * log(radmapT) * rScale;
-  //      float x2 = cos( radians( i * angle ) ) * log(radmapB) * rScale;
-  //      float y2 = sin( radians( i * angle ) ) * log(radmapB) * rScale;
-  //      stroke(hue,satmapM,brimapM);
-  //      strokeWeight(2);
-  //      fill(hue,satmapM,brimapM);
-  //      vertex( x1, y1, -halfHeight);
-  //      vertex( x2, y2, halfHeight);
-  //    }
-  //    else {
-  //      stroke(hue,0,0);
-  //      fill(hue,0,0);
-  //      vertex(0,0,-halfHeight);
-  //      vertex(0,0, halfHeight);
-  //    }
-  //  }
-  //  endShape(CLOSE);
-//} //  
+    // draw connectors if time
+    for (int s=0; s<nSlices; s++){
+      pushMatrix();
+      translate(0,0,sliceZ(s));
+      if (s>0) {
+      beginShape(TRIANGLE_STRIP);
+    for (int d = 0; d < nTimeUnits + 1; d++) {
+      if (beadMax>0) {
+        float dval = nCheckouts[s][d % nTimeUnits];
+        float dval_last = nCheckouts[s-1][d % nTimeUnits];
+        float satmapM = max(map(dval,0,beadMax,satMin,satMax), map(dval_last,0,beadMax,satMin,satMax));
+        float brimapM = max(map(dval,0,beadMax,briMin,briMax), map(dval_last,0,beadMax,briMin,briMax));
+        float x1 = cos( radians( d * angle ) ) * log(dval+1) * rScale;
+        float y1 = sin( radians( d * angle ) ) * log(dval+1) * rScale;
+        float x2 = cos( radians( d * angle ) ) * log(dval_last+1) * rScale;
+        float y2 = sin( radians( d * angle ) ) * log(dval_last+1) * rScale;
+        stroke(hue,satmapM,brimapM);
+        strokeWeight(2);
+        fill(hue,satmapM,brimapM);
+        vertex( x1, y1, -sliceHeight/2);
+        vertex( x2, y2, sliceHeight/2);
+      }
+      else {
+        stroke(hue,0,0);
+        fill(hue,0,0);
+        vertex(0,0,-sliceHeight/2);
+        vertex(0,0, sliceHeight/2);
+      }
+      endShape(CLOSE);
+    }
+      }
+      popMatrix();
+    }
+} //  
     //// for loop: draws a bead by drawing all slices
     //for(int i=0; i<nSlices+1; i++) {
     
