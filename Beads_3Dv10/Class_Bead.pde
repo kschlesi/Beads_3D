@@ -172,52 +172,7 @@ class Bead{
       }
       popMatrix();
     }
-} //  
-    //// for loop: draws a bead by drawing all slices
-    //for(int i=0; i<nSlices+1; i++) {
-    
-    //  // set radii
-    //  if (i==0) {
-    //    thisRadii = new float[nTimeUnits];
-    //    for(int t=0; t<nTimeUnits; t++) {
-    //      thisRadii[t] = 0;
-    //    }
-    //  }
-    //  else if (i!=0) {
-    //    thisRadii = nCheckouts[i-1];
-    //  }
-    //  if (i==nSlices) {
-    //    nextRadii = new float[nTimeUnits];
-    //    for(int t=0; t<nTimeUnits; t++) {
-    //      nextRadii[t] = 0;
-    //    }
-    //  }
-    //  else if (i!=nSlices) {
-    //    nextRadii = nCheckouts[i];
-    //  }
-      
-    //  // draw slice
-    //  pushMatrix();
-    //  translate(0,0,sliceZ(i));
-      
-    //  // set brightness / saturation (nCheckouts)
-      
-    //  // scale radius to beadMax
-    //  switch(bead_type) {
-    //    case 1: drawDotSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,countryHue(cName));
-    //            break;
-    //    case 2: drawLineSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,countryHue(cName));
-    //            break;
-    //    case 3: drawDisc(rScale,thisRadii,sliceHeight,beadMax,countryHue(cName));
-    //            break;
-    //    case 4: drawSlice(rScale,thisRadii,nextRadii,sliceHeight,beadMax,countryHue(cName));
-    //            break;
-    //  }
-      
-    //  popMatrix();
-    //} // end for loop over slices
-    
-    //popMatrix();
+} // end draw of full shape 
       
   float sliceZ(int j) {
     // for the jth slice out of nSlices, returns relative z location 

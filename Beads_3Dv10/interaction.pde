@@ -2,15 +2,15 @@ float offsetY;
 
 void keyPressed()
 {
-  //if (key == 'n' || key == 'N') {
-  //  if (normalisation==true) normalisation = false;
-  //  else if (normalisation==false) normalisation = true; 
-  //}
+  if (key == 'l' || key == 'L') {
+    if (lSwitch==true) lSwitch = false;
+    else if (lSwitch==false) lSwitch = true; 
+  }
   
-  //if (key == 'c' || key == 'C') {
-  //  if (colorSwitch==true) colorSwitch = false;
-  //  else if (colorSwitch==false) colorSwitch = true; 
-  //}
+  if (key == 'i' || key == 'I') {
+    if (iSwitch==true) iSwitch = false;
+    else if (iSwitch==false) iSwitch = true; 
+  }
   
   if (key == 'd' || key == 's' || key == 'c' || key == 'f' ) { 
     // bead_type 1 is default (dot spiral)
@@ -21,6 +21,7 @@ void keyPressed()
     if (key == 'f') bead_type = 4;
   }
   
+  // turn countries on and off
   if (key == '2') {
     if (nCs>=2){
     if (cSwitch[1]==true) cSwitch[1] = false;
@@ -59,22 +60,23 @@ void keyPressed()
   }
   
   // set camera modes
-  if (key == 'r' || key == 'h' || key == ' ') { 
-    // bead_type 1 is default (dot spiral)
-    // set new bead_type
     if (key == 'r') { // road view
       cam.reset(0);   // immediate reset
       cam.setRotations(radians(30),0,0); // pitch up for angled view
       cam.setPitchRotationMode();  // allow pitch rotation only
+      cam.setDistance(400);
+      cam.pan(0,-height/4);
       //cam.setSuppressRollRotationMode();
     }
-    if (key == 'h') {
-      bead_type = 2;
-      cam.reset(0);
+    if (key == 'h') { // hanging view
+      bead_type = 2;  // spirals on
+      lSwitch = true; // labels on
+      cam.reset(0);   // positioning
       cam.setRotations(PI/2,0,PI);
-    }; // hanging
+      cam.pan(colSpacing/2,250);
+      cam.setPitchRotationMode(); // allow pitch rotation only
+    }; 
     if (key == ' ') cam.setFreeRotationMode(); // unrestrict
-  }
   
 }
 

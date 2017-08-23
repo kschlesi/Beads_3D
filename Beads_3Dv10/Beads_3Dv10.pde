@@ -20,9 +20,9 @@ PeasyCam cam;
 // general bead organization
 int bead_type = 1;    // dots, spiral lines, or objects
 int nCs = 6;          // number of countries
-int noClasses = 1;    // number of dewey classes
-int deweyPerClass = 30;  // number of beads per class (same for all)
-int startDewey = 000; // start dewey number (all must be sequential)
+int noClasses = 2;    // number of dewey classes
+int deweyPerClass = 100;  // number of beads per class (same for all)
+int startDewey = 800; // start dewey number (all must be sequential)
 int nBeads = noClasses * deweyPerClass;  // total bead number per country
 Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];  // init bead array
 
@@ -46,6 +46,7 @@ float satMin = 35; //35
 float satMax = 99; //99
 float briMin = 35; //10
 float briMax = 99; //99
+float lpix = 30; // size of labels
 
 // for input data storage
 Table table;
@@ -59,6 +60,7 @@ float[][] beadMatrix;  // holds bead checkout values
 // interaction
 boolean cSwitch[] = new boolean[nCs];
 boolean iSwitch;
+boolean lSwitch;
 
 void setup(){
   // size and view
@@ -77,6 +79,7 @@ void setup(){
   
   // set all interaction switches to defaults
   iSwitch = true;              // instructions on
+  lSwitch = false;             // labels off
   for (int c=0; c<nCs; c++) {  // all countries on
     cSwitch[c] = true;
   }
@@ -144,7 +147,8 @@ void draw(){
   surface.setResizable(true);
   
   // set background and initial position of array
-  background(250);
+  //background(250);
+  background(0,0,20);
   //translate(width/2-colSpacing/2,height/2,0);
   cam.rotateX(0);
     
@@ -168,8 +172,19 @@ void draw(){
   
   // draw labels
   // topic labels
-  //if(lSwitch==true) {
-  //  
-  //}
+  if(lSwitch==true) {
+    for (int cl=0; cl<noClasses; cl++) {
+      pushMatrix();
+      rotateX(radians(90));
+      rotateZ(radians(270));
+      textAlign(LEFT, CENTER);
+      textSize(lpix);
+      stroke(0,0,80);
+      float tx = (rowsPerClass * cl) * (bH + beadSpacing) + 3*lpix/4;
+      float ty = -1*(colsPerClass*colSpacing)/2 - lpix;
+      text(deweyTitle(floor(startDewey/100)+cl), tx, ty);
+      popMatrix();
+    }
+  }
    
 }
