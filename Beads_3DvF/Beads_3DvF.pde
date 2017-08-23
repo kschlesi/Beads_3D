@@ -7,12 +7,10 @@ Supervisor: George Legrady
 
 // declare camera
 import peasy.*;
-import controlP5.*;
 PeasyCam cam;
-ControlP5 cp5;
 
 // general bead organization
-int bead_type = 1;    // dots, spiral lines, or objects
+int bead_type = 2;    // dots, spiral lines, or objects
 int nCs = 6;          // number of countries
 int noClasses = 8;    // number of dewey classes
 int deweyPerClass = 100;  // number of beads per class (same for all)
@@ -48,6 +46,8 @@ float briMax = 99; //99
 float lpix = 45; // size of class labels
 float upix = 20; // size of unDewey labels
 float dpix = 5; // size of date labels
+float lM = 80;  // text alignment (left margin)
+float tS = 20;  // text alignment (line spacing) 
 String theTxt;
 String unDeweyLabels[];
 String cPrint;
@@ -68,7 +68,7 @@ boolean tLabels;
 
 void setup(){
   // size and view
-  size(1300, 1300, P3D);
+  size(1200, 750, P3D);
   colorMode(HSB, 360, 100, 100);
   translate(width/2 - colSpacing/2,height/2,0);
   

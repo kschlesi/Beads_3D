@@ -1,9 +1,8 @@
 // setup camera
 void setupCamera() {
   cam = new PeasyCam(this, 500);
-  perspective(PI/20, width/height, 1, 10000);
+  //perspective(PI/20, width/height, 1, 10000);
   cam.setWheelScale(0.1);
-  cp5 = new ControlP5(this);
 }
 
 void setSwitches() {
