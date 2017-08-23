@@ -5,8 +5,9 @@ class Bead{
   float[] thisRadii;
   float[] nextRadii;
   float beadMax;
+  String cName;
   
-  Bead(float[][] nCheckouts, float beadX, float beadY, float beadZ, float beadHeight){
+  Bead(float[][] nCheckouts, float beadX, float beadY, float beadZ, float beadHeight, String cName){
     this.nCheckouts = nCheckouts;
     this.nSlices = nCheckouts.length;
     this.nTimeUnits = nCheckouts[0].length;
@@ -17,6 +18,7 @@ class Bead{
     this.sliceHeight = beadHeight / nSlices;
     this.dotHeight = sliceHeight / nTimeUnits;
     this.beadMax = max2D(nCheckouts);
+    this.cName = cName;
     
     this.drawBead();
   }
@@ -56,10 +58,21 @@ class Bead{
       // draw slice
       pushMatrix();
       translate(0,0,sliceZ(i));
-      //drawDotSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight);
-      //drawLineSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight);
-      //drawDisc(rScale,thisRadii,sliceHeight,beadMax);
-      drawSlice(rThis,rNext,thisRadii,nextRadii,sliceHeight,beadMax);
+      
+      // set brightness / saturation (nCheckouts)
+      
+      // scale radius to beadMax
+      switch(bead_type) {
+        case 1: drawDotSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,countryHue(cName));
+                break;
+        case 2: drawLineSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight,countryHue(cName));
+                break;
+        case 3: drawDisc(rScale,thisRadii,sliceHeight,beadMax,countryHue(cName));
+                break;
+        case 4: drawSlice(rThis,rNext,thisRadii,nextRadii,sliceHeight,beadMax,countryHue(cName));
+                break;
+      }
+      
       popMatrix();
     } // end for loop over slices
     
