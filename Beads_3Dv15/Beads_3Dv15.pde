@@ -16,7 +16,7 @@ int bead_type = 1;    // dots, spiral lines, or objects
 int nCs = 6;          // number of countries
 int noClasses = 8;    // number of dewey classes
 int deweyPerClass = 100;  // number of beads per class (same for all)
-int startDewey = 200; // start dewey number (all must be sequential)
+int startDewey = 200;     // start dewey number (all must be sequential)
 int nBeads = noClasses * deweyPerClass;  // total bead number per country
 Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];  // init bead array
 boolean unDewey = true;
@@ -116,8 +116,10 @@ void draw(){
       for(int b=0; b<noClasses*deweyPerClass; b++) {
         allBeads[b][c].drawBead();
       }
+      if (unDewey) {
       for(int n=0; n<10; n++) {
         udBeads[n][c].drawBead();
+      }
       }
     }
   }

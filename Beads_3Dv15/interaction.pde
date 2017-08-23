@@ -78,6 +78,8 @@ void keyPressed()
   
   // set camera modes
     if (key == 'r') { // road view
+      bead_type = 2;  // spirals on
+      lSwitch = true; // labels on
       cam.reset(0);   // immediate reset
       cam.setRotations(radians(30),0,0); // pitch up for angled view
       cam.setPitchRotationMode();  // allow pitch rotation only

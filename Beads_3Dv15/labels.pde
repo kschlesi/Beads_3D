@@ -51,6 +51,7 @@ void drawLabels() {
       text(deweyTitle(floor(startDewey/100)+cl), tx, ty);
     popMatrix();
   }
+  if (unDewey) {
   for (int n=0; n<10; n++) {
     pushMatrix();
       rotateX(radians(90));
@@ -62,6 +63,7 @@ void drawLabels() {
       float ty = -1*(colsPerClass*colSpacing)/2 + (n*colSpacing);
       text(unDeweyLabels[n], tx, ty);
     popMatrix();
+  }
   }
 }
 
