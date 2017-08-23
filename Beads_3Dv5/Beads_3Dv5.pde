@@ -77,17 +77,17 @@ void setup(){
       case 1: deweyRegExp = "3..";
               dRE = "3";
               cName = "Iraq";
-              bZ = -500;
+              bZ = -50;
               break;
       case 2: deweyRegExp = "8..";
               dRE = "8";
               cName = "Japan";
-              bZ = 500;
+              bZ = 50;
               break;
       case 3: deweyRegExp = "2..";
               dRE = "2";
               cName = "Israel";
-              bZ = 1000;
+              bZ = 100;
               break;        
     }
     
@@ -104,10 +104,10 @@ void setup(){
       for(TableRow row : table.matchRows(dRE_read,"deweyBin")) {
         for (int t=0; t<noMonths; t++) {
           int yr = floor(t/12) + startYear;
-          int mn = t % 12;
+          int mn = (t % 12) + 1;
           if (row.getInt("year(cout)")==yr && row.getInt("month(cout)")==mn) {
             //println("filling matrix [" + s + "][" + t + "]")
-            beadMatrix[s][t] = row.getFloat("China");
+            beadMatrix[s][t] = row.getFloat(cName);
             //println(mn + "/" + yr + "," + row.getInt("month(cout)") + "/" + row.getInt("year(cout)") + "," + beadMatrix[s][t]);
           }
         }
@@ -115,7 +115,7 @@ void setup(){
     }
     
     // create Bead in Bead array
-    AllBeads.add(new Bead(beadMatrix,0,0,bZ,500,cName));
+    AllBeads.add(new Bead(beadMatrix,0,0,bZ,10,cName));
     
   }
   

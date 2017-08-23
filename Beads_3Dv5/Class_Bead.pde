@@ -31,9 +31,7 @@ class Bead{
     
     // for loop: draws a bead by drawing all slices
     for(int i=0; i<nSlices+1; i++) {
-      float rThis = 100;
-      float rNext = 100;
-      float rScale = 100;
+      float rScale = 10;
     
       // set radii
       if (i==0) {
@@ -69,7 +67,7 @@ class Bead{
                 break;
         case 3: drawDisc(rScale,thisRadii,sliceHeight,beadMax,countryHue(cName));
                 break;
-        case 4: drawSlice(rThis,rNext,thisRadii,nextRadii,sliceHeight,beadMax,countryHue(cName));
+        case 4: drawSlice(rScale,thisRadii,nextRadii,sliceHeight,beadMax,countryHue(cName));
                 break;
       }
       
