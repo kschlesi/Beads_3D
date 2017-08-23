@@ -24,25 +24,21 @@ Table table;
 Table countries;
 Table maxes;
 Table totals;
-//Table subtitles;
-//int numRows, numColumns;
-//int dispRows = 0; // number of rows (dewey classes x years) to display
-//float[][] dataMatrix;
 float[][] beadMatrix;
 float[][] maxMatrix;
 float[][] totMatrix;
-//float maxValue, minValue;
 int noYears = 10;   // number of years per dewey class
 int noMonths = noYears * 12;
 int noInClass = 10; // size of dewey class bin
 int startYear = 2006;
 int nBeadSlices = 100;
-String deweyRegExp = "9..";
-String dRE = "9";
+String deweyRegExp = "3..";
+String dRE = "3";
 String dRE_read;
 
 Bead myBead;
-int cInd = 4;
+int cInd = 11; // china
+String cName = "China";
 
 // box layout
 //float boxSize = 100;
@@ -56,6 +52,7 @@ int cInd = 4;
 void setup(){
   size(1300, 1300, P3D);
   cam = new PeasyCam(this, 300);
+  cam.setWheelScale(0.1);
   
   // load in data
   countries = loadTable("q3_countries.csv");
@@ -65,27 +62,31 @@ void setup(){
   
   // create a single Bead matrix
   beadMatrix = new float[nBeadSlices][noMonths];
+  // initialize all to 0
+  for (int s=0; s<nBeadSlices; s++) {
+    for (int t=0; t<noMonths; t++) {
+      beadMatrix[s][t] = 0;
+    }
+  }
+  
   for (int s=0; s<nBeadSlices; s++) {
     dRE_read = dRE + nf(s,2);
-    //int j = 0;
     for(TableRow row : table.matchRows(dRE_read,"deweyBin"))
       {
         for (int t=0; t<noMonths; t++) {
-          int yr = floor(t/12);
+          int yr = floor(t/12) + startYear;
           int mn = t % 12;
           if (row.getInt("year(cout)")==yr && row.getInt("month(cout)")==mn) {
-            beadMatrix[s][t] = row.getFloat(cInd);
+            //println("filling matrix [" + s + "][" + t + "]");
+            beadMatrix[s][t] = row.getFloat("China");
+            //println(mn + "/" + yr + "," + row.getInt("month(cout)") + "/" + row.getInt("year(cout)") + "," + beadMatrix[s][t]);
           }
-          else beadMatrix[s][t] = 0;
-        
-          //beadMatrix[s][j] = row.getFloat(2);
-          //j++;
-          //if (j==noMonths) break;
         }
       }
   }
   myBead = new Bead(beadMatrix,0,0,0,50);
-  println(beadMatrix.length,beadMatrix[0].length);
+  //println(beadMatrix.length,beadMatrix[0].length);
+  //println(max2D(beadMatrix),min2D(beadMatrix));
   
   
   //for(int i=0; i<numRows; i++) {
@@ -102,7 +103,9 @@ void draw(){
   // Make the screen resizable.            
   surface.setResizable(true);
   
-  background(100);
+  background(200);
+  
+  //printGrid(beadMatrix);
   
   // draw data points
   //for(int i=0; i<Books.size(); i++) {
@@ -110,12 +113,9 @@ void draw(){
     float y = 0; //map(dateParser(Books.get(i).date),  d0, dend, -boxSize/2, boxSize/2);
     float z = 0; //map(log(Books.get(i).count), log(c0), log(cend), -boxSize/2, boxSize/2);
     
-    stroke(10);
     pushMatrix();
     translate(x,y,z);
-    //text(str(myBead.nTimeUnits),0,0);
     myBead.drawBead();
     popMatrix();
-  //}
    
 }

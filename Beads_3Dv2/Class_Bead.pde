@@ -1,7 +1,7 @@
 class Bead{
   int nTimeUnits, nSlices;
   float[][] nCheckouts;
-  float beadX, beadY, beadZ, beadHeight, sliceHeight;
+  float beadX, beadY, beadZ, beadHeight, sliceHeight, dotHeight;
   float[] thisRadii;
   float[] nextRadii;
   float beadMax;
@@ -14,8 +14,11 @@ class Bead{
     this.beadY = beadY;
     this.beadZ = beadZ;
     this.beadHeight = beadHeight;
-    this.sliceHeight = beadHeight/nSlices;
+    this.sliceHeight = beadHeight / nSlices;
+    this.dotHeight = sliceHeight / nTimeUnits;
     this.beadMax = max2D(nCheckouts);
+    
+    this.drawBead();
   }
   
   void drawBead() {
@@ -26,8 +29,9 @@ class Bead{
     
     // for loop: draws a bead by drawing all slices
     for(int i=0; i<nSlices+1; i++) {
-      float rThis = 10;
-      float rNext = 10;
+      float rThis = 100;
+      float rNext = 100;
+      float rScale = 100;
     
       // set radii
       if (i==0) {
@@ -52,6 +56,9 @@ class Bead{
       // draw slice
       pushMatrix();
       translate(0,0,sliceZ(i));
+      //drawDotSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight);
+      //drawLineSpiral(rScale,thisRadii,sliceHeight,beadMax,dotHeight);
+      //drawDisc(rScale,thisRadii,sliceHeight,beadMax);
       drawSlice(rThis,rNext,thisRadii,nextRadii,sliceHeight,beadMax);
       popMatrix();
     } // end for loop over slices
