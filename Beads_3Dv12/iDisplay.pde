@@ -39,6 +39,15 @@ void iDisplay(){
     text("Press [l] to toggle labels",0,150);
     popMatrix();
     
+  // mouseover text
+    //println(dispTxt);
+    if (dispTxt==true) {
+      fill(0,0,80);
+      textSize(30);
+      textAlign(RIGHT);
+      text(theTxt,0,-height+200);
+    }
+    
   cam.endHUD();
   hint(ENABLE_DEPTH_TEST);
 }

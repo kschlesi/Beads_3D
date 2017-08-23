@@ -46,6 +46,7 @@ String theTxt;
 
 // for input data storage
 Table table;
+Table labels;
 float[][] beadMatrix;  // holds bead checkout values
 
 // interaction
@@ -67,6 +68,8 @@ void setup(){
   cp5 = new ControlP5(this);
   
   createDeweyBeads();
+  
+  loadLabels();
 }
 
 void draw(){
@@ -77,7 +80,7 @@ void draw(){
   
   // set background and initial position of array
   //background(250);
-  background(0,0,20);
+  background(0,0,30);
   //translate(width/2-colSpacing/2,height/2,0);
   cam.rotateX(0);
     
@@ -90,36 +93,15 @@ void draw(){
     line(strx, 0, beadSpacing, strx, 0, strz);    
   }
     
-  // draw data points
+  // draw dewey beads
   for(int b=0; b<noClasses*deweyPerClass; b++) {
     for (int c=0; c<nCs; c++) {
       if (cSwitch[c] == true) {
         allBeads[b][c].drawBead();
       }
     }
-    //// mouseover text  
-    //pushMatrix();
-    //translate(allBeads[b][0].beadX,allBeads[b][0].beadY,allBeads[b][0].beadZ);
-    //float mouseDistance = sq(mouseX-screenX(0, 0, 0))+sq(mouseY-screenY(0, 0, 0)); 
-    //if (mouseDistance < sq(min(colSpacing,beadSpacing)))
-    //{
-    //  int dN = allBeads[b][0].deweyNumber;
-    //  theTxt = dN + ": " + deweyLabel(dN);
-    //  dispTxt = true;
-    //}
-    //else dispTxt = false;
-    //popMatrix();
-    //println(dispTxt);
-    //if (dispTxt==true) {
-    //  stroke(0,0,80);
-    //  fill(0,0,80);
-    //  textMode(SCREEN);
-    //  textAlign(RIGHT,CENTER);
-    //  textSize(14);
-    //  text(theTxt,0,0);
-    //}
   }
-//  
+  
   // draw interface
   if (iSwitch==true) iDisplay();
   

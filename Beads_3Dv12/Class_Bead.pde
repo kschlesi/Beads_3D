@@ -42,6 +42,18 @@ class Bead{
         case 4: this.drawSlice();
                 break;
       }
+      
+    // mouseover?
+    float mouseDistance = sq(mouseX-screenX(0, 0, 0))+sq(mouseY-screenY(0, 0, 0)); 
+    if (mouseDistance < sq(min(colSpacing,beadSpacing)))
+    {
+      //TableRow drow = labels.matchRow("^" + str(deweyNumber) + "$",0);
+      //theTxt = deweyNumber + " : " + drow.getString(1);
+      theTxt = deweyNumber + " : " + deweyLabels[deweyNumber];
+      dispTxt = true;
+    }
+    else dispTxt = false;
+    
     // finish draw of bead  
     popMatrix();
   }
