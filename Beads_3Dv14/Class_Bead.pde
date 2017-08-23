@@ -31,7 +31,7 @@ class Bead{
     pushMatrix();
     translate(beadX,beadY,beadZ);
         
-    // scale radius to beadMax
+    // draw bead in desired type
       switch(bead_type) {
         case 1: this.drawDotSpiral();
                 break;
@@ -39,25 +39,30 @@ class Bead{
                 break;
         //case 3: this.drawDisc();
         //        break;
-        case 4: this.drawSlice();
-                break;
+        //case 4: this.drawSlice();
+        //        break;
       }
       
     // mouseover?
+   if (cPrint==cName) {  // use only one country
     float mouseDistance = sq(mouseX-screenX(0, 0, 0))+sq(mouseY-screenY(0, 0, 0)); 
-    if (mouseDistance < sq(min(colSpacing,beadSpacing)) && deweyNumber>=0)
+    if (mouseDistance < sq(20) && deweyNumber>=0)
     {
-      //TableRow drow = labels.matchRow("^" + str(deweyNumber) + "$",0);
-      //theTxt = deweyNumber + " : " + drow.getString(1);
-      theTxt = deweyNumber + " : " + deweyLabels[deweyNumber];
-      dispTxt = true;
+      if (mSwitch) {
+        theTxt = theTxt + deweyNumber + " : " + deweyLabels[deweyNumber] + "\n";
+        dispTxt = true;
+      }
+      if (tLabels) {
+        this.drawTimeLabels();
+      }
     }
-    else dispTxt = false;
+   }
     
     // finish draw of bead  
     popMatrix();
   }
-    
+  
+  // bead draw functions called by drawBead()  
   void drawDotSpiral() {
     for (int d=0; d<(nSlices*nTimeUnits); d++) { // loop over dots
       float angle = 360 / nTimeUnits;
@@ -117,7 +122,9 @@ class Bead{
       }
       endShape(OPEN);
   }
+  
     
+  // these are old versions, too slow to render  
   void drawSlice()
   {
     float angle = 360 / nTimeUnits;
@@ -189,5 +196,24 @@ class Bead{
     // of slice center if whole bead center is at (0,0)
     float z = (sliceHeight-beadHeight)/2 + sliceHeight * j;
     return z;
+  }
+  
+  // draw time labels on a single bead
+  void drawTimeLabels() {
+    pushMatrix();
+      translate(0,0,beadHeight/2 + dpix); // top of bead
+      stroke(0,0,80);
+      textSize(dpix);
+      text("Jan",colSpacing/2-10,0,0);
+      text("Apr",0,colSpacing/2-10,0);
+      text("Jul",-colSpacing/2+10,0,0);
+      text("Oct",0,-colSpacing/2+10,0);
+    popMatrix();
+    pushMatrix();
+      rotateY(radians(-90));
+      translate(0,0,colSpacing/2-5);
+      text("2016",-beadHeight/2 + sliceHeight/2,10,0);
+      text("2006",beadHeight/2 - sliceHeight/2,10,0);
+    popMatrix();
   }
 }

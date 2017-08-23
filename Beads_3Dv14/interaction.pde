@@ -2,23 +2,40 @@ float offsetY;
 
 void keyPressed()
 {
+  // label toggle
   if (key == 'l' || key == 'L') {
     if (lSwitch==true) lSwitch = false;
     else if (lSwitch==false) lSwitch = true; 
   }
   
+  // mouseover text toggle
+    if (key == 'm' || key == 'M') {
+    if (mSwitch==true) mSwitch = false;
+    else if (mSwitch==false) mSwitch = true; 
+  }
+  
+  // mouseover bead time labels toggle
+  if (key == 't' || key == 'T') {
+    if (tLabels==true) tLabels = false;
+    else if (tLabels==false) {
+      tLabels = true;
+    }
+  }
+  
+  // instruction text toggle
   if (key == 'i' || key == 'I') {
     if (iSwitch==true) iSwitch = false;
     else if (iSwitch==false) iSwitch = true; 
   }
   
+  // different bead types
   if (key == 'd' || key == 's' || key == 'c' || key == 'f' ) { 
     // bead_type 1 is default (dot spiral)
     // set new bead_type
     if (key == 'd') bead_type = 1;
     if (key == 's') bead_type = 2;
-    if (key == 'c') bead_type = 3;
-    if (key == 'f') bead_type = 4;
+    //if (key == 'c') bead_type = 3;
+    //if (key == 'f') bead_type = 4;
   }
   
   // turn countries on and off
@@ -66,7 +83,6 @@ void keyPressed()
       cam.setPitchRotationMode();  // allow pitch rotation only
       cam.setDistance(400);
       cam.pan(0,-height/4);
-      //cam.setSuppressRollRotationMode();
     }
     if (key == 'h') { // hanging view
       bead_type = 2;  // spirals on
@@ -79,29 +95,3 @@ void keyPressed()
     if (key == ' ') cam.setFreeRotationMode(); // unrestrict
   
 }
-
-
-
-
-//// mouse position: resets overGrid, 
-//// sets locaton vars mYear, mDewey, mCountry
-//void parseMouseLocation(int x, int y) {
-  
-//  // over grid?
-//  if (x>constantHorizontalMargin && x<(width-constantHorizontalMargin) &&
-//      y>constantVerticalMargin && y<(height-constantVerticalMargin+cellHeight)) {
-//      overGrid = true;
-//      // which box?
-//      mCountry = floor((x-constantHorizontalMargin)/cellWidth);
-//      offsetY = y-constantVerticalMargin-cellHeight;
-//      if (offsetY < 0) offsetY = 0;
-//      mDewey = floor(offsetY/(cellHeight*(noYears+1)))*10 + 
-//               dewey_code*100;
-//      mYear = floor(offsetY/cellHeight)%(noYears+1) + startYear;
-//  }
-//  else if (x<=constantHorizontalMargin || x>=(width-constantHorizontalMargin) ||
-//           y<=constantVerticalMargin || y>=(height-constantVerticalMargin+cellHeight)) {
-//    overGrid = false;
-//  }
-  
-//}

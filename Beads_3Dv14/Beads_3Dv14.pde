@@ -14,9 +14,9 @@ ControlP5 cp5;
 // general bead organization
 int bead_type = 1;    // dots, spiral lines, or objects
 int nCs = 6;          // number of countries
-int noClasses = 4;    // number of dewey classes
+int noClasses = 8;    // number of dewey classes
 int deweyPerClass = 100;  // number of beads per class (same for all)
-int startDewey = 600; // start dewey number (all must be sequential)
+int startDewey = 200; // start dewey number (all must be sequential)
 int nBeads = noClasses * deweyPerClass;  // total bead number per country
 Bead[][] allBeads = new Bead[noClasses*deweyPerClass][nCs];  // init bead array
 boolean unDewey = true;
@@ -47,8 +47,10 @@ float briMax = 99; //99
 // for labels
 float lpix = 45; // size of class labels
 float upix = 20; // size of unDewey labels
+float dpix = 5; // size of date labels
 String theTxt;
 String unDeweyLabels[];
+String cPrint;
 
 // for input data storage
 Table table;
@@ -60,6 +62,7 @@ float[][] beadMatrix;  // holds bead checkout values
 boolean cSwitch[];
 boolean iSwitch;
 boolean lSwitch;
+boolean mSwitch;
 boolean dispTxt;
 boolean tLabels;
 
@@ -70,7 +73,7 @@ void setup(){
   translate(width/2 - colSpacing/2,height/2,0);
   
   setupCamera();
-  
+
   setSwitches();
     
   createDeweyBeads();
@@ -85,10 +88,10 @@ void draw(){
   surface.setResizable(true);
   
   // set background and initial position of array
-  //background(250);
   background(0,0,20);
-  //translate(width/2-colSpacing/2,height/2,0);
   cam.rotateX(0);
+  dispTxt = false;
+  theTxt = "";
     
   // draw beadstrings
   for (int s=0; s<colsPerClass; s++){
@@ -99,7 +102,15 @@ void draw(){
     line(strx, 0, beadSpacing, strx, 0, strz);    
   }
     
-  // draw dewey beads
+  // set country to define label printing
+  cPrint = "";
+  for (int c=0; c<nCs; c++) {
+    if (cSwitch[c] == true) {
+      cPrint = countryName(c);
+    }
+  }
+  
+  // draw dewey beads & non-dewey beads
   for (int c=0; c<nCs; c++) {
     if (cSwitch[c] == true) {
       for(int b=0; b<noClasses*deweyPerClass; b++) {
@@ -113,6 +124,9 @@ void draw(){
   
   // draw interface
   if (iSwitch==true) iDisplay();
+  
+  // draw mouseover text
+  if (mSwitch==true) mDisplay();
   
   // draw topic labels
   if(lSwitch==true) drawLabels();

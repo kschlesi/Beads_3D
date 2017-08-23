@@ -66,7 +66,7 @@ void drawLabels() {
 }
 
 String deweyTitle(int dClass) {
-// gives string reg exp for dewey class
+// gives string title for dewey class
   String deweyClass;
   String deweyRegExp;
   String deweyTitle;

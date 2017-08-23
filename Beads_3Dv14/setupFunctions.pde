@@ -10,6 +10,7 @@ void setSwitches() {
   // set all interaction switches to defaults
   iSwitch = true;              // instructions on
   lSwitch = true;              // labels on
+  mSwitch = true;              // mouseover text on
   dispTxt = false;             // no initial mouseover
   tLabels = false;             // date labels off
   cSwitch = new boolean[nCs];
